@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     const PATH_VIEW = 'users.';
+    const PATH_UPLOAD = 'users';
+
     /**
      * Display a listing of the resource.
      */
@@ -39,9 +41,11 @@ class UserController extends Controller
         //
         $data = $request->except('image');
         if ($request->hasFile('image')) {
-            $data['image'] = Storage::put('users', $request->file('image'));
+            $data['image'] = Storage::put(self::PATH_UPLOAD, $request->file('image'));
+
+            // dd($data['image']);
         }
-        User::query()->create($data);
+        User::query()->create($data);   
         return redirect()->route('users.index');
     }
 
@@ -69,16 +73,15 @@ class UserController extends Controller
     {
         //
         $data = $request->except('image');
-        $data['is_active'] = isset($data['is_active']) ? 1 : 0;
         if ($request->hasFile('image')) {
-            $data['image'] = Storage::put('books', $request->file('image'));
+            $data['image'] = Storage::put('users', $request->file('image'));
             if (!empty($user->image) && Storage::exists($user->image)) {
                 Storage::delete($user->image);
             }
         } else {
             $data['image'] = $user->image;
         }
-        //        dd($data);
+            //    dd($data);
         $user->update($data);
         return redirect()->route('users.index');
     }

@@ -32,12 +32,16 @@
                     <td>{{$item->phone}}</td>
                     <td>{{$item->address}}</td>
                     <td>
-                        @if(!empty($item->image))
-                            <div style="width: 100px;height: 100px;">
-                                <img src="{{Storage::url($item->image)}}"
+                    <div style="width: 100px;height: 100px;">
+                                <img src="/storage/app/{{ $item->image }}"
                                      style="max-width: 100%; max-height: 100%;" alt="">
                             </div>
-                        @endif
+                        <!-- @if(!empty($item->image))
+                            <div style="width: 100px;height: 100px;">
+                                <img src="{{ \Storage::url($item->image)}}"
+                                     style="max-width: 100%; max-height: 100%;" alt="">
+                            </div>
+                        @endif -->
                     </td>
                     <td>{{$item->password}}</td>
                     <td>
